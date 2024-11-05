@@ -1,0 +1,78 @@
+services:
+  web:
+    container_name: web
+    build: .
+    depends_on:
+      - db
+    volumes:
+      - ./:/src
+    environment:
+      - DATABASE_URL=postgresql://postgres:pass@db/adastra
+    ports:
+      - 8000:8000
+    networks:
+      - adastra
+
+  db:
+    container_name: db
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=adastra
+    networks:
+      - adastra
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - ./proxy:/etc/nginx
+    depends_on:
+      - web
+    networks:
+      - adastra
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100k"
+        max-file: "1"
+
+  test_web:
+    container_name: test_web
+    build: .
+    depends_on:
+      - test_db
+    volumes:
+      - ./:/src
+    environment:
+      - DATABASE_URL=postgresql://postgres:pass@test_db/adastra
+    ports:
+      - 8000:8000
+    networks:
+      - adastra
+
+  test_db:
+    container_name: test_db
+    image: postgres:15-alpine
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=adastra
+    networks:
+      - adastra
+
+volumes:
+  postgres_data:
+
+networks:
+  adastra:
