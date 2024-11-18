@@ -1,8 +1,10 @@
-from fastapi import HTTPException, status
-from app.users.models.user import User
-from sqlalchemy.orm import Session
-from app.token import decode_token
 from uuid import UUID
+
+from fastapi import HTTPException, status
+from sqlalchemy.orm import Session
+
+from app.token import decode_token
+from app.users.models.user import User
 
 
 def check_user_authorization(token: str, db: Session) -> User:

@@ -1,9 +1,11 @@
 import uuid
-from sqlalchemy import String, TIMESTAMP, text
-from app.database import Base
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
+
+from sqlalchemy import TIMESTAMP, String, text
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column
+
+from app.database import Base
 
 
 class User(Base):

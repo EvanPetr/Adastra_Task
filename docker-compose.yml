@@ -45,6 +45,19 @@ services:
         max-size: "100k"
         max-file: "1"
 
+#  redis-cache:
+#    image: redis:alpine
+#    hostname: redis-cache
+#    container_name: redis-cache
+#    restart: on-failure
+#    ports:
+#      - '6379:6379'
+#    command: redis-server
+#    volumes:
+#      - cache:/data
+#    networks:
+#      - adastra
+
   test_web:
     container_name: test_web
     build: .

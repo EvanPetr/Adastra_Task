@@ -1,8 +1,9 @@
-from fastapi.testclient import TestClient
 from fastapi import status
-from sqlalchemy.orm import Session
-from app.users.models.user import User
+from fastapi.testclient import TestClient
 from freezegun import freeze_time
+from sqlalchemy.orm import Session
+
+from app.users.models.user import User
 
 
 def test_user_login_does_not_exists(

@@ -28,6 +28,7 @@ codespell = "^2.3.0"
 types-passlib = "^1.7.7.20240819"
 types-python-jose = "^3.3.4.20240106"
 freezegun = "^1.5.1"
+isort = "^5.13.2"
 
 
 [build-system]

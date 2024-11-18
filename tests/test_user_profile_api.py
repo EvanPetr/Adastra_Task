@@ -1,9 +1,11 @@
-from fastapi.testclient import TestClient
-from fastapi import status
-from sqlalchemy.orm import Session
 from uuid import UUID
-from app.users.models.user import User
+
+from fastapi import status
+from fastapi.testclient import TestClient
 from freezegun import freeze_time
+from sqlalchemy.orm import Session
+
+from app.users.models.user import User
 
 
 @freeze_time("2024-11-05T12:00:00+00:00")

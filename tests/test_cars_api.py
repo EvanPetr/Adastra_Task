@@ -1,10 +1,12 @@
-from fastapi.testclient import TestClient
-from fastapi import status
-from sqlalchemy.orm import Session
-from app.cars.models.car import Car
 from uuid import UUID
-from app.users.models.user import User
+
+from fastapi import status
+from fastapi.testclient import TestClient
 from freezegun import freeze_time
+from sqlalchemy.orm import Session
+
+from app.cars.models.car import Car
+from app.users.models.user import User
 
 
 def test_get_cars_empty(test_client: TestClient, cars_empty_response: dict):
@@ -51,6 +53,25 @@ def test_get_cars_search_empty_response(
 
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == cars_empty_response
+
+
+def test_get_car_does_not_exist(test_client: TestClient, car_id: UUID):
+    response = test_client.get(f"/cars/{car_id}")
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.json() == {"detail": f"Car with id <{car_id}> does not exists!"}
+
+
+def test_get_car(
+    db_session: Session, test_client: TestClient, car_model: Car, car_as_json: dict
+):
+    db_session.add(car_model)
+    db_session.commit()
+
+    response = test_client.get(f"/cars/{car_model.id}")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == car_as_json
 
 
 @freeze_time("2024-11-05T12:00:00+00:00")

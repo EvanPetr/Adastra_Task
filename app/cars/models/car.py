@@ -1,9 +1,10 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import TIMESTAMP, String, text
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import String, TIMESTAMP, text
+from sqlalchemy.orm import Mapped, mapped_column
+
 from app.cars.schemas.request import CarRequest
 from app.database import Base
 

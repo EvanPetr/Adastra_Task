@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordBearer
-from app.database import get_db
 from sqlalchemy.orm import Session
+
+from app.database import get_db
 from app.users.schemas.response import Profile
 from app.utils import check_user_authorization
 
-router_user = APIRouter(prefix="/user", tags=["User"])
+router_user: APIRouter = APIRouter(prefix="/user", tags=["User"])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme: OAuth2PasswordBearer = OAuth2PasswordBearer(tokenUrl="token")
 
 
 @router_user.get("/profile", status_code=status.HTTP_200_OK, response_model=Profile)

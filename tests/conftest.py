@@ -1,20 +1,18 @@
+import uuid
 from collections.abc import Generator
-from datetime import datetime, UTC
-
-from app.password import pwd_context
+from datetime import UTC, datetime
+from uuid import UUID
 
 import pytest
-import uuid
-
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
 from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session, sessionmaker
 
-from app.main import app
-from app.database import Base, get_db
-from app.config import DATABASE_URL
 from app.cars.models.car import Car
-from uuid import UUID
+from app.config import DATABASE_URL
+from app.database import Base, get_db
+from app.main import app
+from app.password import pwd_context
 from app.users.models.user import User
 
 engine = create_engine(DATABASE_URL)
@@ -118,6 +116,17 @@ def car_model(car_id: UUID, datetime_stamp: datetime) -> Car:
         created_at=datetime_stamp,
         updated_at=datetime_stamp,
     )
+
+
+@pytest.fixture
+def car_as_json(car_id: UUID) -> dict:
+    return {
+        "id": str(car_id),
+        "brand": "BrandTest",
+        "model": "ModelTest",
+        "created_at": "2024-11-05T00:00:00Z",
+        "updated_at": "2024-11-05T00:00:00Z",
+    }
 
 
 @pytest.fixture

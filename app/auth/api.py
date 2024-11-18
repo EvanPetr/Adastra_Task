@@ -1,12 +1,13 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.users.models.user import User
-from app.database import get_db
 from sqlalchemy.orm import Session
+
 from app.auth.schemas.request import LoginInput, RegisterInput
+from app.database import get_db
 from app.password import hash_password, verify_password
 from app.token import create_access_token
+from app.users.models.user import User
 
-router_auth = APIRouter(prefix="/auth", tags=["Auth"])
+router_auth: APIRouter = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 # Login endpoint

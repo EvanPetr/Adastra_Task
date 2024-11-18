@@ -1,9 +1,10 @@
 from fastapi import FastAPI
-from app.cars.api import router_car
-from app.auth.api import router_auth
-from app.users.api import router_user
-from app.database import engine, Base
 from fastapi_pagination import add_pagination
+
+from app.auth.api import router_auth
+from app.cars.api import router_car
+from app.database import Base, engine
+from app.users.api import router_user
 
 app = FastAPI()
 app.include_router(router_car)
