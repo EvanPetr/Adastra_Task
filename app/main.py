@@ -13,3 +13,8 @@ app.include_router(router_user)
 add_pagination(app)
 
 Base.metadata.create_all(bind=engine)
+
+
+@app.get("/")
+async def root():
+    return {"message": "Welcome to Cars Store"}
