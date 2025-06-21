@@ -8,7 +8,7 @@ COPY pyproject.toml poetry.lock /src/
 
 RUN apt-get -y update; apt-get -y install curl
 RUN curl -sSL https://install.python-poetry.org | python3 -
-RUN poetry install --no-root --no-dev
+RUN poetry install --no-root
 
 COPY . /src
 
